@@ -1,91 +1,73 @@
-# 🚀 Workflow & Bonnes pratiques Git
+# React + TypeScript + Vite
 
-Ce projet s’appuie sur **GitHub Actions** pour garantir la qualité du code et la cohérence du workflow.  
-Deux workflows principaux sont configurés : **validation des commits/branches** et **CI Node.js**.  
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
----
+Currently, two official plugins are available:
 
-## ✅ Vérification des commits et branches
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-Workflow : **`check-commits`**  
-> Déclenché automatiquement sur chaque **push** et **pull request**.
+## React Compiler
 
-### 📌 Règles de commit
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-Chaque message de commit doit suivre le format :
+## Expanding the ESLint configuration
 
-<type>: description courte
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-markdown
-Copier le code
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-**Types acceptés :**
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-- `feature` → ajout de fonctionnalités  
-- `fix` / `bugfix` → corrections de bugs  
-- `hotfix` → correction urgente  
-- `chore` → maintenance / configuration  
-- `docs` → documentation  
-- `style` → formatage / style  
-- `refactor` → refactorisation  
-- `test` → ajout ou modification de tests  
-- `perf` → optimisation des performances  
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-**Exemples corrects :**  
-feature: implémentation du module d’authentification
-fix: correction du bug sur le formulaire d’inscription
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-yaml
-Copier le code
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
----
-
-### 📌 Règles de nom de branche
-
-Une branche doit être nommée de la façon suivante :  
-
-main | develop | <type>/<nom-de-branche>
-
-markdown
-Copier le code
-
-**Types acceptés :** `feature`, `fix`, `bugfix`, `hotfix`, `chore`, `docs`, `style`, `refactor`, `release`, `test`, `perf`  
-
-**Exemples corrects :**
-feature/login
-fix/navbar-bug
-hotfix/events-affichage
-
-markdown
-Copier le code
-
-> 🔒 Si le nom de la branche ne correspond pas à ce format, le workflow échoue.  
-> Avec la **protection de branche GitHub**, le merge sera alors impossible.
-
----
-
-## 🛠️ Intégration Continue Node.js
-
-Workflow : **`Node.js CI`**  
-> Déclenché sur **push** et **pull request**.  
-
-### Étapes exécutées
-
-1. Récupération du code (`checkout`).  
-2. Installation de **Node.js** avec cache npm.  
-3. Installation des dépendances (`npm install`).  
-4. Vérification du code (`npm run lint`).  
-5. Build du projet (`npm run build`).  
-6. Lancement des tests (`npm run test`).  
-7. Vérification de la couverture (`npm run test:cov`).  
-
-⚠️ Si une étape échoue, le workflow passe en **failed** → le merge est bloqué si la protection de branche est activée.  
-
----
-
-## 📖 Bonnes pratiques à respecter
-
-- Toujours créer une branche à partir de `develop` ou `main`.  
-- Respecter le format des **messages de commit** et **noms de branches**.  
-- Vérifier que les tests passent avant d’ouvrir une Pull Request.  
-- Les branches `main` et `develop` doivent rester stables et validées par CI.  
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
