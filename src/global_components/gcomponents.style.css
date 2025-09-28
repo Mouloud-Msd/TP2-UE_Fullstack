@@ -1,12 +1,1 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
-@layer components {
-  .navbar {
-    @apply bg-none w-full;
-  }
-  .navbar ul {
-    @apply flex justify-around p-4 m-0 list-none;
-  }
-}

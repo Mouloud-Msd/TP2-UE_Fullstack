@@ -1,3 +1,7 @@
+@import "tailwindcss";
+@plugin "flowbite-react/plugin/tailwindcss";
+@source "../.flowbite-react/class-list.json";
+
 :root {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   --primary-color: #254d70;
