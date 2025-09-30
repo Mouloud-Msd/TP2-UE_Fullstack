@@ -2,10 +2,10 @@ import CarouselDefault from "../../../global_components/Carousel";
 
 function Overview() {
   const carousel_props = [
-    { desciption: "🎶 Découvrez des artistes" },
-    { desciption: "📅 Explorez des événements" },
-    { desciption: "⭐ Suivez vos favoris" },
-    { desciption: "📍 Trouvez ce qui se passe près de chez vous" },
+    { description: "🎶 Découvrez des artistes" },
+    { description: "📅 Explorez des événements" },
+    { description: "⭐ Suivez vos favoris" },
+    { description: "📍 Trouvez ce qui se passe près de chez vous" },
   ];
   return (
     <>

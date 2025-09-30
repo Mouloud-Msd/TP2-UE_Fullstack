@@ -1,6 +1,7 @@
 import { Carousel } from "flowbite-react";
+import type CarouselItem from "../models/CarouselItems";
 
-function CarouselDefault({ details }: { details?: any[] }) {
+function CarouselDefault({ details }: { details?: CarouselItem[] }) {
   return (
     <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 py-5 overflow-hidden">
       <Carousel slide={true} slideInterval={3000} pauseOnHover>
@@ -10,7 +11,7 @@ function CarouselDefault({ details }: { details?: any[] }) {
               key={i}
               className="flex h-full items-center justify-center bg-gray-400 dark:bg-gray-700 text-white text-2xl font-bold"
             >
-              {d.desciption}
+              {d.description}
             </div>
           );
         })}
