@@ -31,8 +31,8 @@ import { Carousel } from "flowbite-react";
 
 function CarouselDefault() {
   return (
-    <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 overflow-hidden">
-      <Carousel slide={false}>
+    <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 py-5 overflow-hidden">
+      <Carousel slide={true}>
         <img
           src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
           alt="..."
