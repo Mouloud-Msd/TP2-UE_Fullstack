@@ -9,9 +9,8 @@ function Overview() {
   ];
   return (
     <>
-      {/* <CarouselDefault details={carousel_props} /> */}
-      <div className="w-ful min-h-24">
-        <CarouselDefault />
+      <div className="min-h-24">
+        <CarouselDefault details={carousel_props} />
       </div>
     </>
   );

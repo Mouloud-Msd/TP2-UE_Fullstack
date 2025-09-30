@@ -1,39 +1,20 @@
-// import { Carousel } from "@material-tailwind/react";
-
-// function CarouselDefault({ details }: { details: any[] }) {
-//   return (
-//     <Carousel
-//       className="rounded-xl"
-//       placeholder=""
-//       onPointerEnterCapture={() => {}}
-//       onPointerLeaveCapture={() => {}}
-//       onResize={undefined}
-//       onResizeCapture={undefined}
-//     >
-//       {details.map((item, index) => (
-//         <img
-//           key={index}
-//           src={
-//             item.image ||
-//             "https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
-//           }
-//           alt={item.alt || `image ${index + 1}`}
-//           className="h-full w-full object-cover"
-//         />
-//       ))}
-//     </Carousel>
-//   );
-// }
-
-// export default CarouselDefault;
-
 import { Carousel } from "flowbite-react";
 
-function CarouselDefault() {
+function CarouselDefault({ details }: { details?: any[] }) {
   return (
     <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 py-5 overflow-hidden">
-      <Carousel slide={true}>
-        <img
+      <Carousel slide={true} slideInterval={3000} pauseOnHover>
+        {details?.map((d, i) => {
+          return (
+            <div
+              key={i}
+              className="flex h-full items-center justify-center bg-gray-400 dark:bg-gray-700 text-white text-2xl font-bold"
+            >
+              {d.desciption}
+            </div>
+          );
+        })}
+        {/* <img
           src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
           alt="..."
         />
@@ -52,7 +33,7 @@ function CarouselDefault() {
         <img
           src="https://flowbite.com/docs/images/carousel/carousel-5.svg"
           alt="..."
-        />
+        /> */}
       </Carousel>
     </div>
   );
