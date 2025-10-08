@@ -4,8 +4,8 @@ function CarouselDefault({ details }: { details?: CarouselItem[] }) {
   return (
     <div className="carousel w-full">
       {details?.map((item, index) => {
-        let next = (index + 1) % details.length;
-        let prev = (index - 1 + details.length) % details.length;
+        const next = (index + 1) % details.length;
+        const prev = (index - 1 + details.length) % details.length;
         return (
           <div
             key={index}
