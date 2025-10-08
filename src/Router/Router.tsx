@@ -1,4 +1,4 @@
-import  Home  from "../features/home/Home";
+import Home from "../features/home/Home";
 import App from "../App";
 import NotFound from "../global_components/NotFound";
 import Artists from "../features/artists/pages/Artists";
@@ -7,32 +7,28 @@ import About from "../features/about/About";
 import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <App/>,
-        errorElement: <NotFound/>,
-        children: [
-            {
-                index: true,
-                element: <Home/>
-            },
-            {
-                path: "artists",
-                element: <Artists/>
-            },
-            {
-                path: "events",
-                element: <Events/>
-
-            },
-            {
-                path:"about",
-                element: <About/>
-            }
-        ]
-
-
-    }
-
-])
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "artists",
+        element: <Artists />,
+      },
+      {
+        path: "events",
+        element: <Events />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+    ],
+  },
+]);
 export default router;
