@@ -1,17 +1,17 @@
 // import axios from 'axios';
-// import eventsApi from '../../../http/eventApi';
-// import { useEffect, useState } from 'react';
-export default function Artists() {
-  // const [events , setEvents] = useState(null);
-  // useEffect(()=>{
-  //     eventApi.getAll().then( (response) => {
-  //         setEvents(response.data);
-  //         console.log(response.data);
-  //     } ).catch( (error) => {
-  //         console.error("Error fetching events:", error);
-  //     } );
+ import eventsApi from '../../../http/eventsApi';
+ import { useEffect } from 'react';
+export default function Events() {
+  useEffect(()=>{
+      eventsApi.getAll().then( (response) => {
+          console.log("bonjour");
+          console.log(response.data);
+      } ).catch( (error) => {
+          console.error("Error fetching events:", error);
+      } );
 
-  // },[])
+  },[])
+ 
   return (
     <div className="">
       <ul className="w-full min-h-screen list bg-base-100 shadow-md w-2xl m-auto p-6 ">

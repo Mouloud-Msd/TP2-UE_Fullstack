@@ -1,5 +1,7 @@
 // import axios from 'axios';
 //  import { useEffect, useState } from 'react';
+import ArtistForm from "../components/ArtistForm";
+
 export default function Artists() {
     //  const [artists , setArtists] = useState([]);
     // useEffect(
@@ -15,12 +17,8 @@ export default function Artists() {
     // )
   return (
     <div>
-    <h1>all artists</h1>
-    <ul>
-        {/* {artists.map( (artist, index) => (
-            <li key={index}>{artist}</li>
-        ))} */}
-    </ul>
+    <h1>add an artists</h1>
+    <ArtistForm/>
     </div>
     )
 }
