@@ -1,11 +1,15 @@
 // import axios from 'axios';
  import eventsApi from '../../../http/eventsApi';
- import { useEffect } from 'react';
+ import { type Event as apiEvent } from '../../../models/EventModel'
+ import { useEffect,useState } from 'react';
+
 export default function Events() {
+  const [events , setEvents] = useState<apiEvent[]>([])
   useEffect(()=>{
       eventsApi.getAll().then( (response) => {
-          console.log("bonjour");
-          console.log(response.data);
+          console.log(response.data.content);
+          setEvents(response.data.content)
+          console.log(events);
       } ).catch( (error) => {
           console.error("Error fetching events:", error);
       } );
@@ -18,8 +22,9 @@ export default function Events() {
         <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">
           Most played songs this week
         </li>
-
-        <li className="list-row">
+        { events.map((event)=>{
+          
+          return (<li className='list-row' > 
           <div>
             <img
               className="size-10 rounded-box"
@@ -27,10 +32,10 @@ export default function Events() {
             />
           </div>
           <div>
-            <div>Dio Lupa</div>
-            <div className="text-xs uppercase font-semibold opacity-60">
-              Remaining Reason
-            </div>
+          <div>{event.label}</div>
+          <div className="text-xs uppercase font-semibold opacity-60">
+            Remaining Reason
+          </div>
           </div>
           <p className="list-col-wrap text-xs">
             "Remaining Reason" became an instant hit, praised for its haunting
@@ -72,114 +77,8 @@ export default function Events() {
             </svg>
           </button>
         </li>
-
-        <li className="list-row">
-          <div>
-            <img
-              className="size-10 rounded-box"
-              src="https://img.daisyui.com/images/profile/demo/4@94.webp"
-            />
-          </div>
-          <div>
-            <div>Ellie Beilish</div>
-            <div className="text-xs uppercase font-semibold opacity-60">
-              Bears of a fever
-            </div>
-          </div>
-          <p className="list-col-wrap text-xs">
-            "Bears of a Fever" captivated audiences with its intense energy and
-            mysterious lyrics. Its popularity skyrocketed after fans shared it
-            widely online, earning Ellie critical acclaim.
-          </p>
-          <button className="btn btn-square btn-ghost">
-            <svg
-              className="size-[1.2em]"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <g
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2"
-                fill="none"
-                stroke="currentColor"
-              >
-                <path d="M6 3L20 12 6 21 6 3z"></path>
-              </g>
-            </svg>
-          </button>
-          <button className="btn btn-square btn-ghost">
-            <svg
-              className="size-[1.2em]"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <g
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2"
-                fill="none"
-                stroke="currentColor"
-              >
-                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
-              </g>
-            </svg>
-          </button>
-        </li>
-
-        <li className="list-row">
-          <div>
-            <img
-              className="size-10 rounded-box"
-              src="https://img.daisyui.com/images/profile/demo/3@94.webp"
-            />
-          </div>
-          <div>
-            <div>Sabrino Gardener</div>
-            <div className="text-xs uppercase font-semibold opacity-60">
-              Cappuccino
-            </div>
-          </div>
-          <p className="list-col-wrap text-xs">
-            "Cappuccino" quickly gained attention for its smooth melody and
-            relatable themes. The song’s success propelled Sabrino into the
-            spotlight, solidifying their status as a rising star.
-          </p>
-          <button className="btn btn-square btn-ghost">
-            <svg
-              className="size-[1.2em]"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <g
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2"
-                fill="none"
-                stroke="currentColor"
-              >
-                <path d="M6 3L20 12 6 21 6 3z"></path>
-              </g>
-            </svg>
-          </button>
-          <button className="btn btn-square btn-ghost">
-            <svg
-              className="size-[1.2em]"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <g
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2"
-                fill="none"
-                stroke="currentColor"
-              >
-                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
-              </g>
-            </svg>
-          </button>
-        </li>
+        )})}
+        
       </ul>
     </div>
   );
