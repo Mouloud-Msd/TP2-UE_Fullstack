@@ -20,3 +20,4 @@ export interface Event {
   }
   
   export type EventPayload = Omit<Event, "id">;
+  
