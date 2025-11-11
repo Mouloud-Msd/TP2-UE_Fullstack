@@ -10,12 +10,16 @@ import {
 } from "lucide-react";
 
 export default function Footer() {
+  const navigationList = [
+    { name: "Home", href: "/" },
+    { name: "Events", href: "/events" },
+    { name: "Artists", href: "/artists" },
+    { name: "About", href: "/about" },
+  ];
   return (
     <footer className="bg-gray-900 text-gray-300 relative bottom-0 w-full">
-      {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Company Info */}
           <div className="space-y-4">
             <h3 className="text-white text-lg font-bold mb-4">TP2_UE_FS</h3>
             <p className="text-sm leading-relaxed">
@@ -56,38 +60,23 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="text-white text-lg font-bold mb-4">Liens</h3>
             <ul className="space-y-2">
-              <li>
-                <a
-                  href="#"
-                  className="text-sm hover:text-white hover:pl-2 transition-all duration-200"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-sm hover:text-white hover:pl-2 transition-all duration-200"
-                >
-                  Artists
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-sm hover:text-white hover:pl-2 transition-all duration-200"
-                >
-                  Events
-                </a>
-              </li>
+              {navigationList.map((item, index) => (
+                <li>
+                  <a
+                    href={item.href}
+                    key={index}
+                    className="text-sm hover:text-white hover:pl-2 transition-all duration-200"
+                  >
+                    {item.name}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Services */}
           <div>
             <h3 className="text-white text-lg font-bold mb-4">Nos Services</h3>
             <ul className="space-y-2">
@@ -110,7 +99,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
           <div>
             <h3 className="text-white text-lg font-bold mb-4">Contact</h3>
             <ul className="space-y-3">
@@ -143,7 +131,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar */}
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
