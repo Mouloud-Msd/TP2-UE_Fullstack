@@ -6,7 +6,7 @@
 import { useEventStore } from '../../../store/useEventStore';
 
 export default function Events() {
-  const {openEditModal} = useEventStore();
+  const {openEditModal , modified} = useEventStore();
   const [events , setEvents] = useState<apiEvent[]>([])
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [totalPages,setTotalPage] = useState<number>(1)
@@ -21,7 +21,7 @@ export default function Events() {
           console.error("Error fetching events:", error);
       } );
 
-  },[currentPage])
+  },[currentPage,modified])
  
   return (
     <div className="flex flex-col justify-center items-center">
@@ -49,7 +49,7 @@ export default function Events() {
              event.artists.map((artist)=>(
               <span key={artist.id} className='mr-2'>{artist.label}</span>
              )) 
-            ): " "}
+            ): "Aucun Artist "}
             <span> Nombre d'artiste : {event.artists?.length} </span>
           </p>
           <button className="btn btn-square btn-ghost tooltip tooltip-bottom" data-tip="Edit Event"

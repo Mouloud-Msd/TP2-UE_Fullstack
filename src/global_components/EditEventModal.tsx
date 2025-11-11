@@ -1,31 +1,34 @@
 
 import {useEventStore} from "../store/useEventStore"
 import eventsApi from "../http/eventsApi";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
+import {useForm} from "react-hook-form"
 import type { EventPayload } from "../models/EventModel";
+import FormField from "../global_components/FormField"
+import type {FormData} from "../models/types/formtype"
 
 export default function EditEventModal(){
-    const {eventToEdit , closeEditModal} = useEventStore();
-    const [label , setLabel] = useState('')
-    const [startDate, setStartDate] = useState('')
-    const [endDate , setEndDate] = useState('')
+    const {eventToEdit , closeEditModal , refresh} = useEventStore();
+    const {register, handleSubmit, formState: {errors} ,getValues, reset } = useForm<FormData>();
 
     useEffect( () => {
         if(eventToEdit){
-            setLabel(eventToEdit.label);
-            setStartDate(eventToEdit.startDate)
-            setEndDate(eventToEdit.endDate)
+            reset({
+              label:eventToEdit.label,
+              startDate:eventToEdit.startDate,
+              endDate:eventToEdit.endDate,
+            })
         }
-    }, [eventToEdit]  )
+    }, [eventToEdit, reset]  )
     if(!eventToEdit) return null
-    const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const onSubmit = (data:FormData) => {
         const updatedEvent : EventPayload = {
-            label,
-            startDate,
-            endDate
+            label:data.label,
+            startDate:data.startDate,
+            endDate:data.endDate
     }
     eventsApi.update(eventToEdit.id,updatedEvent);
+    refresh();
     closeEditModal();
 
     }
@@ -35,33 +38,45 @@ export default function EditEventModal(){
           <div className="modal-box">
             <h3 className="font-bold text-lg mb-4">Modifier l'événement</h3>
     
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <label className="label">Nom</label>
-              <input
-                type="text"
-                value={label}                  
-                onChange={(e) => setLabel(e.target.value)}
-                className="input input-bordered w-full mb-3"
-                required
-              />
+             
+              <FormField 
+              type="text"
+              name="label"
+              className = "input input-bordered w-full mb-3"
+              register = {register}
+              error = {errors.label}/>
     
               <label className="label">Date de début</label>
-              <input
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                className="input input-bordered w-full mb-3"
-                required
-              />
-    
+              
+              <FormField 
+               type = "date"
+               name="startDate"
+               className ="input input-bordered w-full mb-3"
+               register = {register}
+               error = {errors.startDate}
+               validate = {(value)=>{
+                const endDate = getValues('endDate')
+                if(endDate) return new Date(value) < new Date(endDate) || "la date de debut doit être avant la date de fin"
+        
+               }}
+                 />
+             
               <label className="label">Date de fin</label>
-              <input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="input input-bordered w-full mb-3"
-                required
+              
+              <FormField 
+              type = "date"
+              name="endDate"
+              className="input input-bordered w-full mb-3"
+              register = {register}
+              error = {errors.endDate }
+              validate = {(value)=>{
+                const start = getValues('startDate')
+                return new Date(value) > new Date (start) || "la date de fin doit etre après la date de debut"
+              }}
               />
+              
     
               <div className="modal-action">
                 <button type="button" className="btn" onClick={closeEditModal}>
