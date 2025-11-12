@@ -119,6 +119,7 @@ export default function Artists() {
             totalPages={totalPages}
             currentPage={currentPage}
             onPageChange={setCurrentPage}
+            artist={true}
           />
         </div>
       </div>
