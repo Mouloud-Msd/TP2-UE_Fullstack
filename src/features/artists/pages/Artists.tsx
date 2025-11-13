@@ -3,13 +3,23 @@ import { type artists } from "../../../models/ArtistModel";
 import { useEffect, useState } from "react";
 import Pagination from "../../../global_components/Pagination";
 import { useArtistStore } from "../../../store/useArtistStore";
+import { Link } from "react-router-dom";
+import ArtistModal from "../components/ArtistModal";
 
 export default function Artists() {
-  const { openEditModal, modified } = useArtistStore();
+  //const { openEditModal, modified } = useArtistStore();
   const [artistsList, setArtistsList] = useState<artists[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const {
+    openEditModal,
+    closeEditModal,
+    isEditModalOpen,
+    artistToEdit,
+    modified,
+  } = useArtistStore();
 
   useEffect(() => {
     setLoading(true);
@@ -28,7 +38,6 @@ export default function Artists() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-white px-4 py-12">
       <div className="mx-auto max-w-6xl">
-        {/* HEADER */}
         <div className="mb-10 text-center">
           <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900">
             Artistes
@@ -53,15 +62,19 @@ export default function Artists() {
                 key={artist.id}
                 className="group rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col"
               >
-                {/* IMAGE / BANNIÈRE */}
                 <div className="relative">
-                  <img
-                    src={
-                      "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?q=80&w=600"
-                    }
-                    alt={artist.label}
-                    className="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
+                  <Link
+                    to={`/artist/${artist.id}`}
+                    className="flex flex-col flex-grow"
+                  >
+                    <img
+                      src={
+                        "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?q=80&w=600"
+                      }
+                      alt={artist.label}
+                      className="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </Link>
                   <button
                     onClick={() => openEditModal(artist)}
                     className="absolute top-2 right-2 rounded-full bg-white/80 p-2 hover:bg-white shadow"
@@ -81,7 +94,6 @@ export default function Artists() {
                   </button>
                 </div>
 
-                {/* CONTENU */}
                 <div className="flex flex-col flex-grow p-5">
                   <h2 className="text-lg font-semibold text-slate-900 mb-1">
                     {artist.label}
@@ -113,7 +125,6 @@ export default function Artists() {
           </ul>
         )}
 
-        {/* PAGINATION */}
         <div className="mt-10 flex justify-center">
           <Pagination
             totalPages={totalPages}
@@ -123,6 +134,9 @@ export default function Artists() {
           />
         </div>
       </div>
+      {isEditModalOpen && artistToEdit && (
+        <ArtistModal artist={artistToEdit} onClose={closeEditModal} />
+      )}
     </main>
   );
 }

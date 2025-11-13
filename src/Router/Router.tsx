@@ -5,6 +5,7 @@ import Artists from "../features/artists/pages/Artists";
 import Events from "../features/events/pages/Events";
 import About from "../features/about/About";
 import { createBrowserRouter } from "react-router-dom";
+import ArtistDetail from "../features/artists/pages/ArtistDetails";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "events",
         element: <Events />,
+      },
+      {
+        path: "artist/:id",
+        element: <ArtistDetail />,
       },
       {
         path: "about",
