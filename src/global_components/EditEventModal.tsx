@@ -27,7 +27,7 @@ export default function EditEventModal(){
             startDate:data.startDate,
             endDate:data.endDate
     }
-    eventsApi.update(eventToEdit.id,updatedEvent);
+    eventsApi.update(Number(eventToEdit.id), updatedEvent);
     refresh();
     closeEditModal();
 

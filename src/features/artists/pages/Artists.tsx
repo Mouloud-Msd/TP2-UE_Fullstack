@@ -5,6 +5,7 @@ import Pagination from "../../../global_components/Pagination";
 import { useArtistStore } from "../../../store/useArtistStore";
 import { Link } from "react-router-dom";
 import ArtistModal from "../components/ArtistModal";
+import { ErrorComponent } from "../../../global_components/ErrorComponent";
 
 export default function Artists() {
   //const { openEditModal, modified } = useArtistStore();
@@ -12,6 +13,7 @@ export default function Artists() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error , setError] = useState<{status: number; message: string} | null>(null);
 
   const {
     openEditModal,
@@ -30,10 +32,13 @@ export default function Artists() {
         setTotalPage(response.data.totalPages);
       })
       .catch((error) => {
-        console.error("Erreur lors du chargement des artistes :", error);
+        setError({status: error.status, message: error.message});
       })
       .finally(() => setLoading(false));
   }, [currentPage, modified]);
+  if(error){
+    return <ErrorComponent status={error.status} message={error.message} />
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-white px-4 py-12">

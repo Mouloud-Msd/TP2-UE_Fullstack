@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import artistsApi from "../../../http/artistsApi";
+import eventsApi from "../../../http/eventsApi";
 import { toast } from "react-toastify";
 import type { artists } from "../../../models/ArtistModel";
 import { useArtistStore } from "../../../store/useArtistStore";
+import { type Event as apiEvent } from "../../../models/EventModel";
+import { set } from "react-hook-form";
 
 interface ArtistModalProps {
   artist: artists;
@@ -16,6 +19,9 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
   const [events, setEvents] = useState(artist.events || []);
   const [newEvent, setNewEvent] = useState("");
   const [error, setError] = useState("");
+  const [EventsList, setEventsList] = useState<apiEvent[]>([]);
+  const [mode , setMode] = useState<"select" | "create">("select");
+  const [newId, setNewId] = useState<string>(crypto.randomUUID());
 
   const handleSave = async () => {
     if (label.trim().length < 3)
@@ -30,21 +36,29 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
       toast.error("Erreur lors de la mise à jour.");
     }
   };
+  const getAllEvents = async () => { eventsApi.getAll().then((response) => {
+    setEventsList(response.data.content);
+  });};
+
 
   const handleAddEvent = () => {
-    if (!newEvent.trim()) return toast.error("Nom obligatoire");
+    if (!newEvent.trim()) {toast.error("Nom obligatoire") ; return;};
     setEvents([
       ...events,
-      { id: crypto.randomUUID(), label: newEvent, startDate: "", endDate: "" },
+      { id:newId , label: newEvent, startDate: "", endDate: "" },
     ]);
     setNewEvent("");
     toast.success("Événement ajouté !");
   };
 
+
   const handleRemoveEvent = (labelToRemove: string) => {
     setEvents(events.filter((e) => e.label !== labelToRemove));
     toast.success("Événement supprimé !");
   };
+  useEffect(() => {
+    getAllEvents();
+  }, [mode]);
 
   return (
     <AnimatePresence>
@@ -119,6 +133,7 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
             )}
 
             <div className="flex mt-5 gap-2">
+              {mode === "create" && ( 
               <input
                 type="text"
                 placeholder="Ajouter un nouvel événement"
@@ -126,6 +141,34 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
                 onChange={(e) => setNewEvent(e.target.value)}
                 className="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
+              )}
+              { 
+                mode === "select" && (
+                  <select
+                  className="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  onChange={(e) => 
+                    {
+                      if(e.target.value === "__create_new__"){
+                        setMode("create");
+                        setNewEvent("");
+                      } else {
+                      setNewEvent(e.target.value);
+                      }
+                       setNewId(e.target.selectedOptions[0].getAttribute("data-id") || crypto.randomUUID());
+                    }}
+                  value = {newEvent}
+                >
+                  <option value="">Sélectionner un événement</option>
+                  {EventsList.map((event) => (
+                    <option key={event.id} value={event.label} data-id={event.id}>
+                      {event.label}
+                    </option>
+                  ))}
+                  <option value= "__create_new__" >Créer un nouvel événement</option>
+                </select>
+                )
+              }
+              {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
               <button
                 onClick={handleAddEvent}
                 className="px-5 py-2 rounded-full bg-green-600 text-white font-semibold text-sm shadow hover:scale-[1.02] transition-transform"
