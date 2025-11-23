@@ -14,5 +14,7 @@ const artistsApi = {
     apiClient.put<artists>(`/artists/${id}`, data),
 
   delete: (id: number) => apiClient.delete<void>(`/artists/${id}`),
+  AddEventToArtist: (artistId: string, eventId: string) =>
+    apiClient.post(`/events/${eventId}/artists/${artistId}`),
 };
 export default artistsApi;

@@ -21,7 +21,9 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
   const [error, setError] = useState("");
   const [EventsList, setEventsList] = useState<apiEvent[]>([]);
   const [mode , setMode] = useState<"select" | "create">("select");
-  const [newId, setNewId] = useState<string>(crypto.randomUUID());
+  const [newId, setNewId] = useState<string>("");
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
 
   const handleSave = async () => {
     if (label.trim().length < 3)
@@ -41,14 +43,32 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
   });};
 
 
-  const handleAddEvent = () => {
-    if (!newEvent.trim()) {toast.error("Nom obligatoire") ; return;};
-    setEvents([
+  const handleAddEvent = async () => {
+    if (!newEvent.trim()) { toast.error("Nom obligatoire"); return; }
+    let createdEventId = newId;
+    if (mode === "create" ) {
+      console.log("Creating new event:", newEvent, startDate, endDate);
+     const response  = await eventsApi.create({ label: newEvent, startDate: startDate, endDate: endDate });
+       createdEventId = response.data.id;
+      setNewId(createdEventId);
+      
+      
+  }
+    const newEventObj = { id: newId, label: newEvent, startDate: startDate, endDate: endDate };
+    const updatedEvents = [
       ...events,
-      { id:newId , label: newEvent, startDate: "", endDate: "" },
-    ]);
-    setNewEvent("");
-    toast.success("Événement ajouté !");
+      newEventObj,
+    ];
+    setEvents(updatedEvents);
+    try {
+      await artistsApi.AddEventToArtist(artist.id, createdEventId);
+      setNewEvent("");
+      toast.success("Événement ajouté !");
+      console.log("Événement ajouté :", newEventObj);
+    } catch {
+      console.error("Erreur lors de l'ajout de l'événement.");
+      toast.error("Erreur lors de l'ajout de l'événement.");
+    }
   };
 
 
@@ -132,29 +152,45 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
               </p>
             )}
 
-            <div className="flex mt-5 gap-2">
+            <div className=" mt-5 gap-2">
               {mode === "create" && ( 
-              <input
-                type="text"
-                placeholder="Ajouter un nouvel événement"
-                value={newEvent}
-                onChange={(e) => setNewEvent(e.target.value)}
-                className="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
+                <div className="flex flex-col" >
+                  <input
+                    type="text"
+                    placeholder="Ajouter un nouvel événement"
+                    value={newEvent}
+                    onChange={(e) => {setNewEvent(e.target.value); }}
+                    className="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                  
+                  <input
+                    type="date"
+                    placeholder="Date de début"
+                    onChange= {(e) => setStartDate(e.target.value)}
+                    className="px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                  <input
+                    type="date"
+                    placeholder="Date de fin"
+                    onChange= {(e) => setEndDate(e.target.value)}
+                    className="px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
               )}
               { 
                 mode === "select" && (
                   <select
-                  className="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="flex-1 px-4 py-2 w-md rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   onChange={(e) => 
                     {
                       if(e.target.value === "__create_new__"){
                         setMode("create");
                         setNewEvent("");
                       } else {
+                        setMode("select");
                       setNewEvent(e.target.value);
                       }
-                       setNewId(e.target.selectedOptions[0].getAttribute("data-id") || crypto.randomUUID());
+                       setNewId(e.target.selectedOptions[0].getAttribute("data-id") || "");
                     }}
                   value = {newEvent}
                 >
@@ -171,7 +207,7 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
               {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
               <button
                 onClick={handleAddEvent}
-                className="px-5 py-2 rounded-full bg-green-600 text-white font-semibold text-sm shadow hover:scale-[1.02] transition-transform"
+                className="px-5 py-2 my-5 mx-4  rounded-full bg-green-600 text-white font-semibold text-sm shadow hover:scale-[1.02] transition-transform"
               >
                 Ajouter
               </button>
