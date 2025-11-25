@@ -7,7 +7,7 @@ const FormField : React.FC<FormFieldProps> = ({
     register,
     error,
     validate
-})=>(
+}: FormFieldProps)=>(
     <>
     <input
     type = {type}

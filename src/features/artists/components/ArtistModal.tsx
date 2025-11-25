@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 import type { artists } from "../../../models/ArtistModel";
 import { useArtistStore } from "../../../store/useArtistStore";
 import { type Event as apiEvent } from "../../../models/EventModel";
-import { set } from "react-hook-form";
+
+// import { set } from "react-hook-form";
 
 interface ArtistModalProps {
   artist: artists;
@@ -64,9 +65,8 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
       await artistsApi.AddEventToArtist(artist.id, createdEventId);
       setNewEvent("");
       toast.success("Événement ajouté !");
-      console.log("Événement ajouté :", newEventObj);
+      
     } catch {
-      console.error("Erreur lors de l'ajout de l'événement.");
       toast.error("Erreur lors de l'ajout de l'événement.");
     }
   };

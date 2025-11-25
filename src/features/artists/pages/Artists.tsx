@@ -14,7 +14,7 @@ export default function Artists() {
   const [totalPages, setTotalPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
   const [error , setError] = useState<{status: number; message: string} | null>(null);
-
+  const pageSize = 10;
   const {
     openEditModal,
     closeEditModal,
@@ -26,7 +26,7 @@ export default function Artists() {
   useEffect(() => {
     setLoading(true);
     artistsApi
-      .getByPage(currentPage - 1)
+      .getByPage(currentPage - 1, pageSize)
       .then((response) => {
         setArtistsList(response.data.content);
         setTotalPage(response.data.totalPages);

@@ -1,5 +1,5 @@
 import apiClient from "./apiClient";
-import type { EventPayload, PaginatedResponse } from "../models/EventModel";
+import type {  PaginatedResponse } from "../models/EventModel";
 import type { ArtistPayload, artists } from "../models/ArtistModel";
 
 const artistsApi = {
@@ -7,8 +7,8 @@ const artistsApi = {
   getAll: () => apiClient.get<PaginatedResponse<artists>>("/artists"),
 
   getById: (id: string) => apiClient.get<artists>(`/artists/${id}`),
-  getByPage: (page: number) =>
-    apiClient.get<PaginatedResponse<artists>>(`/artists?page=${page}`),
+  getByPage: (page: number, size : number) =>
+    apiClient.get<PaginatedResponse<artists>>(`/artists?page=${page}&size=${size}`),
 
   update: (id: string, data: ArtistPayload) =>
     apiClient.put<artists>(`/artists/${id}`, data),
