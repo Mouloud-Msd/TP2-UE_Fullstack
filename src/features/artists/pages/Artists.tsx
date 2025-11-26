@@ -6,6 +6,7 @@ import { useArtistStore } from "../../../store/useArtistStore";
 import { Link } from "react-router-dom";
 import ArtistModal from "../components/ArtistModal";
 import { ErrorComponent } from "../../../global_components/ErrorComponent";
+import { set } from "react-hook-form";
 
 export default function Artists() {
   //const { openEditModal, modified } = useArtistStore();
@@ -23,6 +24,26 @@ export default function Artists() {
     modified,
   } = useArtistStore();
 
+  const handleSearch = async (query: string) => {
+    if (query.trim() === "") {
+      // If the search query is empty, reset to the full list
+      artistsApi.getByPage(currentPage - 1, pageSize).then((response) => {
+        setArtistsList(response.data.content);
+        setTotalPage(response.data.totalPages);
+      });
+      return;
+    }
+    // get All  artists
+    let allArtists  =  await  artistsApi.getAll().then((response) => {
+      return response.data.content;
+    });
+    let filteredArtists = allArtists.filter((artist) =>
+      artist.label.toLowerCase().startsWith(query.toLowerCase())
+    );
+    setArtistsList(filteredArtists);
+    setTotalPage(1);
+  };
+
   useEffect(() => {
     setLoading(true);
     artistsApi
@@ -39,12 +60,33 @@ export default function Artists() {
   if(error){
     return <ErrorComponent status={error.status} message={error.message} />
   }
+  
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-white px-4 py-12">
       <div className="mx-auto max-w-6xl">
+      <div className="w-full max-w-sm ">
+  <div className="relative w-6xl">
+    <input
+      className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+      placeholder="search for artists..." 
+      onChange={(e) => handleSearch(e.target.value)}
+      
+    />
+    <button
+      className="absolute top-1 right-1 flex items-center rounded bg-slate-800 py-1 px-2.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+      type="button"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 mr-2">
+        <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clip-rule="evenodd" />
+      </svg>
+ 
+      Search
+    </button> 
+  </div>
+</div>
         <div className="mb-10 text-center">
-          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 my-4">
             Artistes
           </h1>
           <p className="mt-2 text-slate-600 text-sm md:text-base">
@@ -52,7 +94,7 @@ export default function Artists() {
             participent.
           </p>
         </div>
-
+    
         {/* CHARGEMENT */}
         {loading ? (
           <div className="flex justify-center items-center h-48">
