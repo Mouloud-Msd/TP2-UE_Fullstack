@@ -161,7 +161,7 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
                     value={newEvent}
                     onChange={(e) => {setNewEvent(e.target.value); }}
                     className="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  />
+                   />
                   
                   <input
                     type="date"

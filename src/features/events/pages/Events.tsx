@@ -86,14 +86,15 @@ import { ErrorComponent } from "../../../global_components/ErrorComponent";
 //   );
 // }
 export default function Events() {
-  const { openEditModal, modified } = useEventStore();
+  const { openEditModal, openCreateModal, modified } = useEventStore();
   const [events, setEvents] = useState<apiEvent[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error , setError] = useState<{status: number; message: string} | null>(null);
+  const [error, setError] = useState<{status: number; message: string} | null>(null);
 
   useEffect(() => {
+    
     setLoading(true);
     eventsApi
       .getByPage(currentPage - 1)
@@ -106,6 +107,7 @@ export default function Events() {
       })
       .finally(() => setLoading(false));
   }, [currentPage, modified]);
+
   if(error){
     return <ErrorComponent status={error.status} message={error.message} />
   }
@@ -113,14 +115,35 @@ export default function Events() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-white px-4 py-12">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-10 text-center">
-          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900">
-            Événements
-          </h1>
-          <p className="mt-2 text-slate-600 text-sm md:text-base">
-            Découvrez la liste des événements disponibles, avec les artistes
-            associés.
-          </p>
+        <div className="mb-10">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="text-center sm:text-left">
+              <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900">
+                Événements
+              </h1>
+              <p className="mt-2 text-slate-600 text-sm md:text-base">
+                Découvrez la liste des événements disponibles, avec les artistes
+                associés.
+              </p>
+            </div>
+            
+            <button
+              onClick={() => openCreateModal()}
+              className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 transition-colors duration-200"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+              </svg>
+              Ajouter un événement
+            </button>
+          </div>
         </div>
 
         {loading ? (
@@ -128,7 +151,25 @@ export default function Events() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-indigo-600 border-solid"></div>
           </div>
         ) : events.length === 0 ? (
-          <p className="text-center text-slate-500">Aucun événement trouvé.</p>
+          <div className="text-center py-12">
+            <p className="text-slate-500 mb-4">Aucun événement trouvé.</p>
+            <button
+              onClick={() => openCreateModal()}
+              className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+              </svg>
+              Créer votre premier événement
+            </button>
+          </div>
         ) : (
           <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {events.map((event) => (
@@ -196,7 +237,7 @@ export default function Events() {
                   </div>
 
                   <p className="mt-3 text-xs text-slate-400">
-                    Nombre d’artistes : {event.artists?.length || 0}
+                    Nombre d'artistes : {event.artists?.length || 0}
                   </p>
                 </div>
               </li>
