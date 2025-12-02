@@ -4,7 +4,10 @@ import type { artists } from "../models/ArtistModel";
 type ArtistStore = {
   artistToEdit: artists | null;
   isEditModalOpen: boolean;
+  isCreateModalOpen: boolean;
   modified: boolean;
+  openCreateModal: () => void;
+  closeCreateModal: () => void;
   openEditModal: (artist: artists) => void;
   closeEditModal: () => void;
   refresh: () => void;
@@ -15,6 +18,15 @@ export const useArtistStore = create<ArtistStore>((set) => ({
   artistToEdit: null,
   isEditModalOpen: false,
   modified: false,
+  isCreateModalOpen: false,
+  openCreateModal: () =>
+    set({
+      isCreateModalOpen: true,
+    }),
+  closeCreateModal: () =>
+    set({
+      isCreateModalOpen: false,
+    }),
   openEditModal: (artist) =>
     set({
       artistToEdit: artist,

@@ -6,7 +6,7 @@ import { useArtistStore } from "../../../store/useArtistStore";
 import { Link } from "react-router-dom";
 import ArtistModal from "../components/ArtistModal";
 import { ErrorComponent } from "../../../global_components/ErrorComponent";
-import { set } from "react-hook-form";
+
 
 export default function Artists() {
   //const { openEditModal, modified } = useArtistStore();
@@ -19,7 +19,9 @@ export default function Artists() {
   const {
     openEditModal,
     closeEditModal,
+    openCreateModal,
     isEditModalOpen,
+    isCreateModalOpen,
     artistToEdit,
     modified,
   } = useArtistStore();
@@ -64,27 +66,46 @@ export default function Artists() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-white px-4 py-12">
-      <div className="mx-auto max-w-6xl">
-      <div className="w-full max-w-sm ">
-  <div className="relative w-6xl">
+      <div className="mx-auto w-full">
+      <div className="w-full max-w-6xl mx-20 ">
+  <div className="flex gap-3 items-center w-full ">
+  {/* Barre de recherche */}
+  <div className="relative flex-1 ">
     <input
       className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
       placeholder="search for artists..." 
       onChange={(e) => handleSearch(e.target.value)}
-      
     />
     <button
       className="absolute top-1 right-1 flex items-center rounded bg-slate-800 py-1 px-2.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
       type="button"
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 mr-2">
-        <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clip-rule="evenodd" />
+        <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" />
       </svg>
- 
       Search
     </button> 
   </div>
+
+  {/* Bouton Ajouter un artiste */}
+  <button
+    onClick={() => openCreateModal()}
+    className="flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 transition-colors duration-200 whitespace-nowrap"
+    type="button"
+  >
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 24 24" 
+      fill="currentColor" 
+      className="w-4 h-4"
+    >
+      <path fillRule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clipRule="evenodd" />
+    </svg>
+    Ajouter un artiste
+  </button>
 </div>
+       
+</div>     
         <div className="mb-10 text-center">
           <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 my-4">
             Artistes
@@ -183,6 +204,9 @@ export default function Artists() {
       </div>
       {isEditModalOpen && artistToEdit && (
         <ArtistModal artist={artistToEdit} onClose={closeEditModal} />
+      )}
+      {isCreateModalOpen && (
+        <ArtistModal  onClose={closeEditModal} />
       )}
     </main>
   );

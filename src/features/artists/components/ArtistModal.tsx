@@ -7,17 +7,18 @@ import type { artists } from "../../../models/ArtistModel";
 import { useArtistStore } from "../../../store/useArtistStore";
 import { type Event as apiEvent } from "../../../models/EventModel";
 
+
 // import { set } from "react-hook-form";
 
 interface ArtistModalProps {
-  artist: artists;
+  artist?: artists;
   onClose: () => void;
 }
 
 export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
-  const { refresh } = useArtistStore();
-  const [label, setLabel] = useState(artist.label);
-  const [events, setEvents] = useState(artist.events || []);
+  const { refresh, isCreateModalOpen , closeCreateModal } = useArtistStore();
+  const [label, setLabel] = useState(artist?.label || "");
+  const [events, setEvents] = useState(artist?.events || []);
   const [newEvent, setNewEvent] = useState("");
   const [error, setError] = useState("");
   const [EventsList, setEventsList] = useState<apiEvent[]>([]);
@@ -27,9 +28,21 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
   const [endDate, setEndDate] = useState<string>("");
 
   const handleSave = async () => {
+    if (artist == null && isCreateModalOpen) {
+      try {
+        await artistsApi.create({ label });
+        toast.success("Artiste créé !");
+        refresh();
+        onClose();
+      } catch {
+        toast.error("Erreur lors de la création.");
+      }
+
+    }
     if (label.trim().length < 3)
       return setError("Le nom doit comporter au moins 3 caractères.");
     setError("");
+    if (artist == null) return;
     try {
       await artistsApi.update(artist.id, { label });
       toast.success("Artiste mis à jour !");
@@ -46,6 +59,7 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
 
   const handleAddEvent = async () => {
     if (!newEvent.trim()) { toast.error("Nom obligatoire"); return; }
+    if (!artist) { toast.error("Artiste non défini"); return; }
     let createdEventId = newId;
     if (mode === "create" ) {
       console.log("Creating new event:", newEvent, startDate, endDate);
@@ -96,7 +110,7 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
           transition={{ duration: 0.3 }}
         >
           <button
-            onClick={onClose}
+            onClick={() => {onClose() ; closeCreateModal();}}
             className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"
           >
             ✕
@@ -120,13 +134,14 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
             />
             {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
             <button
-              onClick={handleSave}
+              onClick={() => {handleSave(); closeCreateModal();  }}
               className="mt-4 inline-flex items-center justify-center rounded-full bg-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow hover:scale-[1.02] transition-transform"
             >
               Sauvegarder
             </button>
+            
           </div>
-
+            { !isCreateModalOpen && (
           <div>
             <h2 className="text-lg font-semibold mb-3">Événements associés</h2>
             {events.length ? (
@@ -213,8 +228,10 @@ export default function ArtistModal({ artist, onClose }: ArtistModalProps) {
               </button>
             </div>
           </div>
+            )}
         </motion.div>
       </motion.div>
     </AnimatePresence>
+            
   );
 }
