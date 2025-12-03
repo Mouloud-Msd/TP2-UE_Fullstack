@@ -5,6 +5,10 @@ export type FormData = {
     startDate: string
     endDate: string
 }
+export type ArtistFormData = {
+    firstName: string;
+    lastName: string;
+}
 //  Les attributs de chaque input 
 export type FormFieldProps = {
 type:string
@@ -20,3 +24,5 @@ export type validFieldName =
 | "label"
 | "startDate"
 | "endDate"
+| "firstName"
+| "lastName";

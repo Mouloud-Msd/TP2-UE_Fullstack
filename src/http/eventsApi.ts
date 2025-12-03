@@ -22,7 +22,7 @@ const eventsApi = {
   getByPage:(page:number) => apiClient.get<PaginatedResponse<Event>>(`/events?page=${page}`),
   create: (data: EventPayload) => apiClient.post<Event>("/events", data),
 
-  update: (id: number, data: EventPayload) =>
+  update: (id: string, data: EventPayload) =>
     apiClient.put<Event>(`/events/${id}`, data),
 
   delete: (id: number) => apiClient.delete<void>(`/events/${id}`),

@@ -1,15 +1,16 @@
 
 import {useEventStore} from "../store/useEventStore"
 import eventsApi from "../http/eventsApi";
-import { useEffect} from "react";
-import {useForm} from "react-hook-form"
+import { useEffect, useState} from "react";
+import {set, useForm} from "react-hook-form"
 import type { EventPayload } from "../models/EventModel";
 import FormField from "../global_components/FormField"
 import type {FormData} from "../models/types/formtype"
 
 export default function EditEventModal(){
-    const {eventToEdit , closeEditModal , refresh} = useEventStore();
+    const {eventToEdit , closeEditModal,closeCreateModal , refresh , isCreateModalOpen } = useEventStore();
     const {register, handleSubmit, formState: {errors} ,getValues, reset } = useForm<FormData>();
+    
 
     useEffect( () => {
         if(eventToEdit){
@@ -20,23 +21,33 @@ export default function EditEventModal(){
             })
         }
     }, [eventToEdit, reset]  )
-    if(!eventToEdit) return null
+    if(!eventToEdit && !isCreateModalOpen) return null
     const onSubmit = (data:FormData) => {
         const updatedEvent : EventPayload = {
             label:data.label,
             startDate:data.startDate,
             endDate:data.endDate
     }
-    eventsApi.update(eventToEdit.id,updatedEvent);
+    if(isCreateModalOpen){
+      console.log("creating event")
+      eventsApi.create(updatedEvent);
+      refresh();
+      closeCreateModal();
+      
+
+    }
+    if(eventToEdit){
+      console.log("updating event "+ eventToEdit.id)
+    eventsApi.update(eventToEdit.id, updatedEvent);
     refresh();
     closeEditModal();
-
+    }
     }
 
     return (
         <dialog className="modal modal-bottom sm:modal-middle" open>
           <div className="modal-box">
-            <h3 className="font-bold text-lg mb-4">Modifier l'événement</h3>
+            <h3 className="font-bold text-lg mb-4">{isCreateModalOpen? "Create a new event" : "update event"}</h3>
     
             <form onSubmit={handleSubmit(onSubmit)}>
               <label className="label">Nom</label>
@@ -79,7 +90,7 @@ export default function EditEventModal(){
               
     
               <div className="modal-action">
-                <button type="button" className="btn" onClick={closeEditModal}>
+                <button type="button" className="btn" onClick={isCreateModalOpen? closeCreateModal :  closeEditModal}>
                   Annuler
                 </button>
                 <button type="submit" className="btn btn-primary">
