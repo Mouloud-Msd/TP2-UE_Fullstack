@@ -8,9 +8,10 @@ export default function AboutPage() {
               TP2_UE_FS — Interface de gestion d'événements & artistes
             </h1>
             <p className="mt-4 text-lg text-slate-600">
-              Projet frontend relié à une API existante. L'objectif : construire
-              une interface ergonomique, responsive et robuste pour parcourir,
-              créer et gérer événements et artistes (relation many-to-many).
+              Projet frontend relié à une API existante. L'objectif est de
+              construire une interface ergonomique, responsive et robuste pour
+              parcourir, créer et gérer événements et artistes (relation
+              many-to-many).
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -195,10 +196,6 @@ export default function AboutPage() {
         {/* TEAM */}
         <section className="mt-12 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
           <h4 className="text-lg font-semibold">Équipe</h4>
-          <p className="mt-2 text-sm text-slate-600">
-            Projet : TP2_UE_FS — équipe à titre d'exemple. Remplacez les entrées
-            par vos vrais noms/avatars.
-          </p>
 
           <div className="mt-4 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
             {[
