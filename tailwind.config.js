@@ -5,6 +5,10 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
+        playwrite: ["Playwrite", "sans-serif"],
+      },
       colors: {
         primary: "#254d70",
         secondary: "#131d4f",

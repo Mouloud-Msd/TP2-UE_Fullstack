@@ -1,6 +1,9 @@
-
 import apiClient from "./apiClient";
-import type {Event,EventPayload,PaginatedResponse} from "../models/EventModel"
+import type {
+  Event,
+  EventPayload,
+  PaginatedResponse,
+} from "../models/EventModel";
 
 // export interface Event {
 //   id: number;
@@ -8,18 +11,17 @@ import type {Event,EventPayload,PaginatedResponse} from "../models/EventModel"
 //   startDate: string;
 //   endDate: string;
 //   artists? : artists[];
-  
+
 // }
 
-
 // export type EventPayload = Omit<Event, "id">;
-
 
 const eventsApi = {
   getAll: () => apiClient.get<PaginatedResponse<Event>>("/events"),
 
-  getById: (id: number) => apiClient.get<Event>(`/events/${id}`),
-  getByPage:(page:number) => apiClient.get<PaginatedResponse<Event>>(`/events?page=${page}`),
+  getById: (id: string) => apiClient.get<Event>(`/events/${id}`),
+  getByPage: (page: number) =>
+    apiClient.get<PaginatedResponse<Event>>(`/events?page=${page}`),
   create: (data: EventPayload) => apiClient.post<Event>("/events", data),
 
   update: (id: string, data: EventPayload) =>

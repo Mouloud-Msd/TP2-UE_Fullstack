@@ -13,10 +13,10 @@ const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
 }) => {
   const getVisiblePage = (): (number | string)[] => {
-    let tab: number[] = [];
+    const tab: number[] = [];
     if (totalPages === 0 || totalPages === 1) return [];
     if (totalPages) {
-      for (let i = 0; i <= totalPages; i++) {
+      for (let i = 1; i <= totalPages; i++) {
         tab.push(i);
       }
       return tab;
@@ -60,9 +60,9 @@ const Pagination: React.FC<PaginationProps> = ({
             className={`join-item btn btn-square ${
               typeof page === "number"
                 ? page > totalPages
-                  ? "cursor-not-allowed opacity-70" // désactivé si page trop grande
+                  ? "cursor-not-allowed opacity-70"
                   : "" // normal
-                : "cursor-not-allowed opacity-70" // désactivé si page n'est pas un nombre (ex: "..." )
+                : "cursor-not-allowed opacity-70"
             }`}
             type="radio"
             name="option"

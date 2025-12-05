@@ -19,7 +19,6 @@ export default function NotFoundPage() {
         </a>
       </div>
 
-      {/* Illustration décorative */}
       <div className="mt-12">
         <svg
           className="w-64 h-64 mx-auto opacity-30"

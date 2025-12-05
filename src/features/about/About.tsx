@@ -8,9 +8,10 @@ export default function AboutPage() {
               TP2_UE_FS — Interface de gestion d'événements & artistes
             </h1>
             <p className="mt-4 text-lg text-slate-600">
-              Projet frontend relié à une API existante. L'objectif : construire
-              une interface ergonomique, responsive et robuste pour parcourir,
-              créer et gérer événements et artistes (relation many-to-many).
+              Projet frontend relié à une API existante. L'objectif est de
+              construire une interface ergonomique, responsive et robuste pour
+              parcourir, créer et gérer événements et artistes (relation
+              many-to-many).
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -50,7 +51,6 @@ export default function AboutPage() {
             </p>
           </div>
 
-          {/* Illustration simple */}
           <div className="order-first md:order-last flex justify-center md:justify-end">
             <svg
               width="320"
@@ -109,7 +109,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* FEATURES / CONTRAINTES */}
         <section className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {[
             {
@@ -153,7 +152,6 @@ export default function AboutPage() {
           ))}
         </section>
 
-        {/* TECH STACK & APPROCHE */}
         <section className="mt-12 grid gap-8 md:grid-cols-3">
           <div className="md:col-span-2 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
             <h4 className="text-lg font-semibold">Approche</h4>
@@ -192,13 +190,8 @@ export default function AboutPage() {
           </aside>
         </section>
 
-        {/* TEAM */}
         <section className="mt-12 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
           <h4 className="text-lg font-semibold">Équipe</h4>
-          <p className="mt-2 text-sm text-slate-600">
-            Projet : TP2_UE_FS — équipe à titre d'exemple. Remplacez les entrées
-            par vos vrais noms/avatars.
-          </p>
 
           <div className="mt-4 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
             {[
