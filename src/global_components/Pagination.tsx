@@ -13,7 +13,7 @@ const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
 }) => {
   const getVisiblePage = (): (number | string)[] => {
-    let tab: number[] = [];
+    const tab: number[] = [];
     if (totalPages === 0 || totalPages === 1) return [];
     if (totalPages) {
       for (let i = 1; i <= totalPages; i++) {

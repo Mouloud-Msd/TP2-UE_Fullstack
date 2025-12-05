@@ -30,7 +30,6 @@ export default function Artists() {
 
   const handleSearch = async (query: string) => {
     if (query.trim() === "") {
-      // If the search query is empty, reset to the full list
       artistsApi.getByPage(currentPage - 1, pageSize).then((response) => {
         setArtistsList(response.data.content);
         setTotalPage(response.data.totalPages);
@@ -38,10 +37,10 @@ export default function Artists() {
       return;
     }
     // get All  artists
-    let allArtists = await artistsApi.getAll().then((response) => {
+    const allArtists = await artistsApi.getAll().then((response) => {
       return response.data.content;
     });
-    let filteredArtists = allArtists.filter((artist) =>
+    const filteredArtists = allArtists.filter((artist) =>
       artist.label.toLowerCase().startsWith(query.toLowerCase())
     );
     setArtistsList(filteredArtists);
