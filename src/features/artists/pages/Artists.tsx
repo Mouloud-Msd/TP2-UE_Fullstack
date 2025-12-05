@@ -70,7 +70,6 @@ export default function Artists() {
       <div className="mx-auto w-full">
         <div className="w-full max-w-6xl flex justify-between items-center m-auto">
           <div className="flex gap-3 items-center w-full ">
-            {/* Barre de recherche */}
             <div className="relative flex-1 ">
               <input
                 className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
@@ -97,7 +96,6 @@ export default function Artists() {
               </button>
             </div>
 
-            {/* Bouton Ajouter un artiste */}
             <button
               onClick={() => openCreateModal()}
               className="flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 transition-colors duration-200 whitespace-nowrap"
@@ -129,7 +127,6 @@ export default function Artists() {
           </p>
         </div>
 
-        {/* CHARGEMENT */}
         {loading ? (
           <div className="flex justify-center items-center h-48">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-indigo-600 border-solid"></div>

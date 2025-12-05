@@ -97,7 +97,6 @@ function CarouselDefault() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Boutons de navigation */}
       <button
         onClick={() =>
           setCurrent((prev) => (prev - 1 + slides.length) % slides.length)
@@ -113,7 +112,6 @@ function CarouselDefault() {
         ❯
       </button>
 
-      {/* Indicateurs */}
       <div className="absolute bottom-4 w-full flex justify-center gap-2">
         {slides.map((_, i) => (
           <button

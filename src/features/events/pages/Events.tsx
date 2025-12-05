@@ -258,7 +258,6 @@ export default function Events() {
           </ul>
         )}
 
-        {/* PAGINATION */}
         <div className="mt-10 flex justify-center">
           <Pagination
             totalPages={totalPages}

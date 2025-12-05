@@ -76,8 +76,6 @@ export default function EditEventModal() {
           >
             ✕
           </button>
-          {/* <dialog className="modal modal-bottom sm:modal-middle" open>
-            <div className="modal-box"> */}
           <h3 className="font-bold text-lg mb-4">
             {isCreateModalOpen ? "Create a new event" : "update event"}
           </h3>
@@ -88,7 +86,7 @@ export default function EditEventModal() {
             <FormField
               type="text"
               name="label"
-              className="input input-bordered w-full mb-3"
+              className="input input-bordered bg-white border border-slate-200 w-full mb-3"
               register={register}
               error={errors.label}
             />
@@ -98,7 +96,7 @@ export default function EditEventModal() {
             <FormField
               type="date"
               name="startDate"
-              className="input input-bordered w-full mb-3"
+              className="input input-bordered bg-white border border-slate-200 w-full mb-3"
               register={register}
               error={errors.startDate}
               validate={(value) => {
@@ -116,7 +114,7 @@ export default function EditEventModal() {
             <FormField
               type="date"
               name="endDate"
-              className="input input-bordered w-full mb-3"
+              className="input input-bordered bg-white border border-slate-200 w-full mb-3"
               register={register}
               error={errors.endDate}
               validate={(value) => {
@@ -141,8 +139,6 @@ export default function EditEventModal() {
               </button>
             </div>
           </form>
-          {/* </div>
-          </dialog> */}
         </motion.div>
       </motion.div>
     </AnimatePresence>

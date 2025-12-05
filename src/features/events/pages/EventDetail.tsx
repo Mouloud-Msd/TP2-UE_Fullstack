@@ -1,136 +1,4 @@
-// import React, { useEffect, useState } from "react";
-// import { motion } from "framer-motion";
-// import type { Event } from "../../../models/EventModel";
-// import { useNavigate, useParams } from "react-router-dom";
-// import eventsApi from "../../../http/eventsApi";
-// import { Loader, Loader2 } from "lucide-react";
-
-// const EventDetails = () => {
-//   const index = 0;
-//   const { id } = useParams();
-//   const navigate = useNavigate();
-
-//   const [event, setEvent] = useState<Event>();
-//   const [loading, setLoading] = useState(true);
-
-//   const formatDate = (dateString: string) => {
-//     const date = new Date(dateString);
-//     return date.toLocaleDateString("en-US", {
-//       month: "short",
-//       day: "numeric",
-//       year: "numeric",
-//     });
-//   };
-
-//   useEffect(() => {
-//     async function fetchArtist() {
-//       try {
-//         setLoading(true);
-//         const { data } = await eventsApi.getById(id!);
-//         if (!data) throw new Error("not found");
-//         setEvent(data);
-//       } catch {
-//         navigate("/404");
-//       } finally {
-//         setLoading(false);
-//       }
-//     }
-//     fetchArtist();
-//   }, [id, navigate]);
-
-//   if (loading || !event) return <Loader2 />;
-
-//   const isMultiDay = event.startDate !== event.endDate;
-
-//   const getColorFromId = (id: string) => {
-//     const colors = [
-//       "bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-400",
-//       "bg-gradient-to-r from-purple-50 to-pink-50 border-l-4 border-purple-400",
-//       "bg-gradient-to-r from-emerald-50 to-teal-50 border-l-4 border-emerald-400",
-//       "bg-gradient-to-r from-amber-50 to-orange-50 border-l-4 border-amber-400",
-//     ];
-//     const hash = id
-//       .split("")
-//       .reduce((acc, char) => acc + char.charCodeAt(0), 0);
-//     return colors[hash % colors.length];
-//   };
-
-//   return (
-//     <motion.div
-//       initial={{ opacity: 0, y: 20 }}
-//       animate={{ opacity: 1, y: 0 }}
-//       transition={{ duration: 0.3, delay: index * 0.05 }}
-//       className={`p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer ${getColorFromId(
-//         event.id
-//       )}`}
-//     >
-//       <div className="flex flex-col space-y-3">
-//         <div className="flex items-center justify-between">
-//           <h3 className="text-xl font-bold text-gray-800 tracking-tight">
-//             {event.label}
-//           </h3>
-//           <div className="flex space-x-2">
-//             <span className="px-3 py-1 text-xs font-medium bg-white/80 backdrop-blur-sm rounded-full text-gray-700 border border-white/30">
-//               {formatDate(event.startDate)}
-//               {isMultiDay && ` - ${formatDate(event.endDate)}`}
-//             </span>
-//           </div>
-//         </div>
-
-//         {event.artists!.length > 0 && (
-//           <div className="mt-4">
-//             <div className="flex items-center space-x-2 mb-2">
-//               <div className="w-1 h-4 bg-current opacity-60 rounded-full"></div>
-//               <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
-//                 Artists
-//               </span>
-//             </div>
-
-//             <div className="flex flex-wrap gap-2">
-//               if event.artists ?{" "}
-//               {event.artists!.map((artist) => (
-//                 <span
-//                   key={artist.id}
-//                   className="px-3 py-1.5 text-sm bg-white/70 backdrop-blur-sm rounded-full text-gray-700 border border-white/40 hover:bg-white hover:shadow-sm transition-colors duration-200"
-//                 >
-//                   {artist.label}
-//                 </span>
-//               ))}{" "}
-//               :{" "}
-//               <span className="text-sm text-gray-500">
-//                 aucun artiste enregistre pour cet evenement.
-//               </span>
-//             </div>
-//           </div>
-//         )}
-
-//         <div className="pt-4 border-t border-white/40">
-//           <div className="flex items-center justify-between text-xs text-gray-500">
-//             <span className="flex items-center">
-//               <div className="w-2 h-2 rounded-full bg-current mr-2"></div>
-//               {formatDate(event.startDate)}
-//             </span>
-//             {isMultiDay && (
-//               <>
-//                 <div className="flex-1 mx-4">
-//                   <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-//                 </div>
-//                 <span className="flex items-center">
-//                   <div className="w-2 h-2 rounded-full bg-current mr-2"></div>
-//                   {formatDate(event.endDate)}
-//                 </span>
-//               </>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     </motion.div>
-//   );
-// };
-
-// export default EventDetails;
-
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import type { Event } from "../../../models/EventModel";
 import { useNavigate, useParams } from "react-router-dom";
@@ -182,7 +50,6 @@ const EventDetails = () => {
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-white text-slate-900 px-6 py-16">
       <div className="mx-auto max-w-4xl">
-        {/* Back Button */}
         <motion.button
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -193,15 +60,13 @@ const EventDetails = () => {
           Retour aux événements
         </motion.button>
 
-        {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="rounded-2xl border border-slate-100 bg-white shadow-lg overflow-hidden"
         >
-          {/* Header with gradient */}
-          <div className="relative bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 px-8 py-12">
+          <div className="relative bg-gradient-to-bl from-[#0f172a] via-[#1e1a78] to-[#0f172a] px-8 py-12">
             <div className="absolute inset-0 bg-black/10"></div>
             <div className="relative">
               <motion.h1
@@ -233,9 +98,7 @@ const EventDetails = () => {
             </div>
           </div>
 
-          {/* Content Section */}
           <div className="p-8">
-            {/* Date Range Visualization */}
             {isMultiDay && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -271,7 +134,6 @@ const EventDetails = () => {
               </motion.div>
             )}
 
-            {/* Artists Section */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -327,7 +189,6 @@ const EventDetails = () => {
           </div>
         </motion.div>
 
-        {/* Additional Info Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
