@@ -52,7 +52,7 @@ export default function Footer() {
                 <Linkedin size={20} />
               </a>
               <a
-                href="#"
+                href="https://github.com/Mouloud-Msd/TP2-UE_Fullstack"
                 className="hover:text-gray-400 transition-colors duration-200"
               >
                 <Github size={20} />

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import TP2_LOGO from "../assets/TP2_LOGO.png";
 export default function Navbar() {
   const navigationList = [
     { name: "Home", href: "/" },
@@ -54,8 +54,8 @@ export default function Navbar() {
           </ul>
         </div>
 
-        <Link to="/" className="btn btn-ghost text-xl font-bold">
-          LoGo
+        <Link to="/">
+          <img src={TP2_LOGO} alt="Logo" className="h-20 w-25" />
         </Link>
       </div>
 

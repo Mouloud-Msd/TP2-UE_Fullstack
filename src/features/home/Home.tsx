@@ -18,7 +18,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 function Header() {
   return (
-    <section className="text-center px-6 py-20 bg-gradient-to-br from-indigo-50 via-white to-slate-50">
+    <section className="font-playwrite text-center px-6 py-20 bg-gradient-to-br from-indigo-50 via-white to-slate-50">
       <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight">
         TP2_UE_FS
       </h1>

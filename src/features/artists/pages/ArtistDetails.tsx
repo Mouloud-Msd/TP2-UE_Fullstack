@@ -60,8 +60,8 @@ export default function ArtistDetail() {
           Retour aux artistes
         </button>
 
-        <div className="rounded-2xl border border-slate-100 bg-white shadow-lg overflow-hidden">
-          <div className="relative bg-gradient-to-br from-purple-500 via-pink-500 to-rose-500 px-8 py-12">
+        <div className="rounded-2xl border border-slate-100 shadow-lg overflow-hidden">
+          <div className="relative h-full w-full bg-blue-500/30 rounded-md bg-clip-padding backdrop-blur-lg bg-opacity-10 border border-gray-100 px-8 py-12">
             <div className="absolute inset-0 bg-black/10"></div>
             <div className="relative flex flex-col md:flex-row items-center md:items-start gap-6">
               <div className="flex-1 text-center md:text-left">

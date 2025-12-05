@@ -17,7 +17,7 @@ export default function Artists() {
     status: number;
     message: string;
   } | null>(null);
-  const pageSize = 10;
+  const pageSize = 15;
   const {
     openEditModal,
     closeEditModal,
