@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Pagination from "../../../global_components/Pagination";
 import { useEventStore } from "../../../store/useEventStore";
 import { ErrorComponent } from "../../../global_components/ErrorComponent";
+import { Link } from "react-router-dom";
 
 // export default function Events() {
 //   const {openEditModal , modified} = useEventStore();
@@ -91,10 +92,12 @@ export default function Events() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<{status: number; message: string} | null>(null);
+  const [error, setError] = useState<{
+    status: number;
+    message: string;
+  } | null>(null);
 
   useEffect(() => {
-    
     setLoading(true);
     eventsApi
       .getByPage(currentPage - 1)
@@ -102,14 +105,14 @@ export default function Events() {
         setEvents(response.data.content);
         setTotalPage(response.data.totalPages);
       })
-      .catch((error) => { 
-        setError({status: error.status, message: error.message});
+      .catch((error) => {
+        setError({ status: error.status, message: error.message });
       })
       .finally(() => setLoading(false));
   }, [currentPage, modified]);
 
-  if(error){
-    return <ErrorComponent status={error.status} message={error.message} />
+  if (error) {
+    return <ErrorComponent status={error.status} message={error.message} />;
   }
 
   return (
@@ -126,7 +129,7 @@ export default function Events() {
                 associés.
               </p>
             </div>
-            
+
             <button
               onClick={() => openCreateModal()}
               className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 transition-colors duration-200"
@@ -139,7 +142,11 @@ export default function Events() {
                 stroke="currentColor"
                 strokeWidth="2"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4v16m8-8H4"
+                />
               </svg>
               Ajouter un événement
             </button>
@@ -165,7 +172,11 @@ export default function Events() {
                 stroke="currentColor"
                 strokeWidth="2"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4v16m8-8H4"
+                />
               </svg>
               Créer votre premier événement
             </button>
@@ -178,13 +189,15 @@ export default function Events() {
                 className="group rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col"
               >
                 <div className="relative">
-                  <img
-                    src={
-                      "https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=600"
-                    }
-                    alt={event.label}
-                    className="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
+                  <Link to={`/event/${event.id}`}>
+                    <img
+                      src={
+                        "https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=600"
+                      }
+                      alt={event.label}
+                      className="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </Link>
                   <button
                     onClick={() => openEditModal(event)}
                     className="absolute top-2 right-2 rounded-full bg-white/80 p-2 hover:bg-white shadow"

@@ -42,22 +42,22 @@ interface CarouselItem {
 function CarouselDefault() {
   const slides: CarouselItem[] = [
     {
-      description: "🎶 Découvrez des artistes uniques",
+      description: "Découvrez des artistes uniques",
       image:
         "https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=1200",
     },
     {
-      description: "📅 Explorez des événements vibrants",
+      description: "Explorez des événements vibrants",
       image:
         "https://images.unsplash.com/photo-1484820540004-14229fe36ca4?q=80&w=1200",
     },
     {
-      description: "⭐ Suivez vos favoris et leurs nouveautés",
+      description: "Suivez vos favoris et leurs nouveautés",
       image:
         "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?q=80&w=1200",
     },
     {
-      description: "📍 Trouvez ce qui se passe près de chez vous",
+      description: "Trouvez ce qui se passe près de chez vous",
       image:
         "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1200",
     },
