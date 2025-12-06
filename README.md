@@ -1,3 +1,51 @@
+# Guide de lancement du projet
+
+Ce projet utilise GitHub Actions pour l'intégration continue (CI) et respecte les bonnes conventions et pratiques de codage listées ci-dessous.
+
+## 📋 Prérequis et installation
+
+1. Configuration de Node.js (version ≥ 20)
+   Le projet utilise Vite, qui nécessite Node.js version 20 ou supérieure. Nous recommandons l'utilisation de nvm pour gérer les versions de Node.
+
+```
+# Installer nvm (si ce n'est pas déjà fait)
+# Suivez les instructions sur : https://github.com/nvm-sh/nvm
+
+# Installer Node.js v20
+nvm install v20
+
+# Utiliser Node.js v20
+nvm use v20
+
+# Vérifier la version installée
+node --version
+```
+
+2. Installation des dépendances
+
+```
+npm i
+```
+
+3. Lancer l'API
+
+4. Remplissage de la base de données
+   Le projet inclut un script de remplissage automatique de la base de données avec des données d'artistes et d'événements.
+
+```
+# Rendre le script exécutable
+chmod +x script_remplissage.sh
+
+# Exécuter le script
+./script_remplissage.sh
+```
+
+5. Lancement du projet frontend
+
+```
+Lancement de l'app
+```
+
 # 🚀 Workflow & Bonnes pratiques Git
 
 Ce projet s’appuie sur **GitHub Actions** pour garantir la qualité du code et la cohérence du workflow.
@@ -119,3 +167,7 @@ Workflow : **`Node.js CI`**
 - Vérifier que les tests passent avant d’ouvrir une Pull Request.
 
 - Les branches `main` et `develop` doivent rester stables et validées par CI.
+
+```
+
+```
